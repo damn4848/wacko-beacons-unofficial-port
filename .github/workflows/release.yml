@@ -32,3 +32,4 @@ jobs:
           files: |
             build/libs/wacko-beacons-unofficial-port-*.jar
           body: ${{ github.event.head_commit.message }}
+          prerelease: ${{ contains(github.ref_name, 'beta') }}
