@@ -24,7 +24,9 @@ Beacons handle primary and secondary effects separately. The server only checks 
 
 The server does not validate whether the chosen effect is *reachable* at the current beacon level. Therefore, a level-1 beacon (9 diamond blocks) can grant Strength I (normally requires level 4, 50 diamond blocks).
 
-This mod implements both effects via two client-side Mixins. The server is unaware.
+> ⚠️ **26.2 note**: since 26.2 the server validates all of this (`BeaconMenu.updateEffects` → `BeaconBlockEntity.validateEffects`, and `applyEffects` only applies secondary powers at level 4). This port therefore also bypasses the server-side validation and applies effects without the level gate (client-side Mixins). Works in singleplayer; on a dedicated server, the mod must be installed there too.
+
+This mod implements all of the above via client-side Mixins.
 
 ---
 
@@ -88,7 +90,9 @@ See [LICENSE](LICENSE).
 
 服务端不校验"当前信标等级是否能获得该效果"。因此，1 级信标（9 个钻石块）即可选择 Strength I（正常需要 4 级、50 个钻石块）。
 
-本模组通过两个客户端 Mixin 实现上述效果，服务端无感知。
+> ⚠️ **26.2 说明**：26.2 起服务端已加入完整校验（`BeaconMenu.updateEffects` → `BeaconBlockEntity.validateEffects`，且 `applyEffects` 只在 4 级时施加副效果）。因此本移植版同时绕过了服务端校验与等级门槛（客户端 Mixin 实现）。单机（集成服务端）直接生效；独立服务器需要同样安装本模组才生效。
+
+本模组通过客户端 Mixin 实现上述全部效果。
 
 ---
 

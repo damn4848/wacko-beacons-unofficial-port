@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_25",
   "client": [
     "BeaconBlockEntityMixin",
-    "BeaconScreenButtonMixin"
+    "BeaconScreenButtonMixin",
+    "BeaconMenuMixin",
+    "BeaconApplyEffectsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

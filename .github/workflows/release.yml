@@ -31,5 +31,4 @@ jobs:
         with:
           files: |
             build/libs/wacko-beacons-unofficial-port-*.jar
-          body: |
-            作者改进了 mod 架构的一些东西。
+          body: ${{ github.event.head_commit.message }}

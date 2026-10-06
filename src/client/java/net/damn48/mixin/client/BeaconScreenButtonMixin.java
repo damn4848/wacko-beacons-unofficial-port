@@ -7,21 +7,26 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(targets = "net.minecraft.client.gui.screens.inventory.BeaconScreen$EffectButtonWidget")
+/**
+ * 效果按钮修复：低级信标也能点击所有效果按钮。
+ *
+ * <p>26.2 中信标效果按钮已改名为 {@code BeaconScreen$BeaconPowerButton}
+ * （副效果为其子类 {@code BeaconScreen$BeaconUpgradePowerButton}），
+ * 原版 {@code updateStatus(int level)} 以 {@code active = tier < level}
+ * 限制按钮，1 级信标只能点击第一排（速度/急迫）。
+ * 这里在每次更新状态时强制所有效果按钮可用。</p>
+ *
+ * <p>副效果按钮继承自本类，其 {@code updateStatus} 通过
+ * {@code super.updateStatus} 走到这里，因此同样生效。</p>
+ */
+@Mixin(targets = "net.minecraft.client.gui.screens.inventory.BeaconScreen$BeaconPowerButton")
 abstract class BeaconScreenButtonMixin extends AbstractWidget {
     public BeaconScreenButtonMixin(int x, int y, int width, int height, Component message) {
         super(x, y, width, height, message);
     }
 
-    /**
-     * 漏洞二实现（低级信标获取高级效果）。
-     *
-     * <p>服务端不校验所选效果在当前信标等级下是否可达，因此只要
-     * 信标 GUI 中的效果按钮可点击，1 级信标也能选中 Strength I。
-     * 这里在每次 tick 时把按钮强制置为可用（active），无视金字塔等级。</p>
-     */
-    @Inject(at = @At("TAIL"), method = "tick")
-    private void tick(int level, CallbackInfo ci) {
+    @Inject(at = @At("TAIL"), method = "updateStatus")
+    private void updateStatus(int level, CallbackInfo ci) {
         this.active = true;
     }
 }
