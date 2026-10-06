@@ -13,7 +13,9 @@
   "environment": "client",
   "entrypoints": {
     "main": [],
-    "client": []
+    "client": [
+      "net.damn48.WackoBeaconsClient"
+    ]
   },
   "mixins": [
     {

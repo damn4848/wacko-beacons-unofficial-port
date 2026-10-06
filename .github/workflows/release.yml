@@ -31,4 +31,5 @@ jobs:
         with:
           files: |
             build/libs/wacko-beacons-unofficial-port-*.jar
-          generate_release_notes: true
+          body: |
+            作者改进了 mod 架构的一些东西。
